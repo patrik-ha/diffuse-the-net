@@ -1,0 +1,12 @@
+body {
+    width: 200px;
+}
+#power-button {
+    cursor: pointer;
+    font-size: 20px;
+    background-color: red;
+}
+
+#power-button.on {
+    background-color: green;
+}
