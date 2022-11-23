@@ -2,7 +2,10 @@
 
 ## What?
 Using a custom Chrome extension to re-generate images on web-pages by only looking at their captions.
-TODO: image or movie example here
+
+
+https://user-images.githubusercontent.com/1567528/203648503-99133bb4-ba20-4355-8deb-64785649640e.mp4
+
 
 ## Why?
 Most webpages these days have image-captions in addition to the actual image they want to display. If these captions are good enough, state-of-the-art image generation models can use these captions to generate similar images, without having to actually download the image itself, trading GPU compute for network bandwidth.
