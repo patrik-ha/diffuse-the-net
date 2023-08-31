@@ -13,9 +13,9 @@ function fixImage(image, alternate) {
     }
 }
 
-async function requestAlternate(image) {
+async function requestAlternate(image, suffix) {
     let formData = new FormData();
-    formData.append("prompt", image.alt);
+    formData.append("prompt", image.alt + " " + suffix);
     formData.append("width", image.width);
     formData.append("height", image.height);
     return await fetch("http://127.0.0.1:5000/api/generate_photo", {
@@ -32,10 +32,16 @@ async function requestAlternate(image) {
 
 (async() => {
     // Ugly, ugly callback code (but not as ugly as the images that are generated)
-    chrome.storage.sync.get(["isOn"], async function(items) {
+    chrome.storage.sync.get(["isOn", "promptSuffix"], async function (items) {
         if (!items["isOn"]) {
             return;
         }
+        var promptSuffix = "";
+
+        if (items["promptSuffix"]) {
+            promptSuffix = items["promptSuffix"];
+        };
+
         var images = document.getElementsByTagName("img"); 
         // Loop through to blur everything
         for(var i = 0; i < images.length; i++) {
@@ -46,7 +52,7 @@ async function requestAlternate(image) {
         // Loop through to send requests
         for(var i = 0; i < images.length; i++) {
             if(images[i].alt && images[i].width > 60 && images[i].height > 60) {
-                var res = await requestAlternate(images[i]);
+                var res = await requestAlternate(images[i], promptSuffix);
                 if(res != null) {
                     fixImage(images[i], res);
                 }
